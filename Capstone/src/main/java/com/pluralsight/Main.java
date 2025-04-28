@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        System.out.println("***** WELCOME TO THE LEDGER APP");
+        System.out.println("***** WELCOME TO THE LEDGER APP *****");
 
         while (running){
             System.out.println("[1] Add Deposit");
@@ -32,5 +32,37 @@ public class Main {
             }
         }
         scanner.close();
+    }
+    private static void runDeposit(Scanner scanner) {
+        try {
+            System.out.print("Enter Deposit Description: ");
+            String description = scanner.nextLine();
+
+            System.out.print("Enter Vendor Name: ");
+            String vendor = scanner.nextLine();
+
+            System.out.print("Enter Deposit Amount: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            String date = now.format(dateFormatter);
+            String time = now.format(timeFormatter);
+
+            String transactionLine = date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
+
+
+            FileWriter writer = new FileWriter("transactions.csv", true);
+            writer.write(transactionLine + "\n");
+            writer.close();
+
+            System.out.println("Deposit was successful!");
+        } catch (IOException e) {
+            System.out.println("error recording deposit, try again.");
+        } catch (NumberFormatException e){
+            System.out.println("Invalid amount entered. Please enter a valid number.");
+        }
     }
 }
