@@ -1,10 +1,17 @@
 package com.pluralsight;
+import java.io.BufferedReader;
 import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 public class runLedger {
 
     public static void displayLedgerMenu() {
         Scanner scanner = new Scanner(System.in);
+        boolean stayInMenu = true;
 
+        while (stayInMenu){
             System.out.println("\n***** Ledger Menu *****");
             System.out.println("[1] All entries");
             System.out.println("[2] Deposits");
@@ -19,15 +26,15 @@ public class runLedger {
             switch (choice){
                 case 1:
                     System.out.println("\n[Showing all Entries]");
-                    // insert method here :))
+                    showAllEntries();
                     break;
                 case 2:
                     System.out.println("\n[Showing all DEPOSITS]");
-                    // insert method here :))
+                    showDeposits();
                     break;
                 case 3:
                     System.out.println("\n[Showing all PAYMENTS]");
-                    // insert method here :))
+                    showPayments();
                     break;
                 case 4:
                     System.out.println("\n[Showing all REPORTS]");
@@ -36,12 +43,35 @@ public class runLedger {
                 case 5:
                     System.out.println("\n[Returning to HOME]");
                     // insert method here :))
+                    stayInMenu = false;
                     break;
                 default:
                     System.out.println("\nInvalid choice, Please try again.");
             }
-
-
         }
+    }
+    private static void showAllEntries(){
+            List<String> transactions = readTransactionsFromCSV();
+            for (String transaction : transactions){
+                System.out.println(transaction);
+            }
+    }
+    private static void showPayments(){
 
     }
+    private static void showDeposits(){
+
+    }
+    private static List<String> readTransactionsFromCSV(){
+        List<String> transactions = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                transactions.add(line);
+            }
+        } catch (IOException e){
+                System.out.println("Error reading file: " + e.getMessage());
+
+        }return transactions;
+    }
+}
