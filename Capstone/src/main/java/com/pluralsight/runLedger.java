@@ -38,7 +38,7 @@ public class runLedger {
                     break;
                 case 4:
                     System.out.println("\n[Showing all REPORTS]");
-                    // insert method here :))
+                    showReports(scanner);
                     break;
                 case 5:
                     System.out.println("\n[Returning to HOME]");
@@ -57,10 +57,76 @@ public class runLedger {
             }
     }
     private static void showPayments(){
-
+            List<String> transactions = readTransactionsFromCSV();
+            for (String transaction : transactions){
+                if (transaction.startsWith("-")){
+                    System.out.println(transaction);
+                }
+            }
     }
     private static void showDeposits(){
+        List<String> transactions = readTransactionsFromCSV();
+        for (String transaction : transactions){
+            if (!transaction.startsWith("-")){
+                System.out.println(transaction);
+            }
+        }
+    }
+    private static void showReports(Scanner scanner){
+        boolean stayInReportsMenu = true;
 
+        while (stayInReportsMenu){
+            System.out.println("\n***** Reports *****");
+            System.out.println("[1] Month To Date");
+            System.out.println("[2] Previous Month");
+            System.out.println("[3] Year To Date");
+            System.out.println("[4] Previous Year");
+            System.out.println("[5] Search by Vendor");
+            System.out.println("[0] Back");
+            System.out.print("Choose an option [0-5]: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice){
+                case 1:
+                    System.out.println("\n[Month to Date]");
+                    //method
+                    break;
+                case 2:
+                    System.out.println("\n[Previous Month]");
+                    //method
+                    break;
+                case 3:
+                    System.out.println("\n[Year to Date]");
+                    //method
+                    break;
+                case 4:
+                    System.out.println("\n[Previous Year]");
+                    //method
+                    break;
+                case 5:
+                    System.out.println("\n[Search by Vendor]");
+                    System.out.print("Enter Vendor Name: ");
+                    String vendorName = scanner.nextLine();
+                    showTransactionVendor(vendorName);
+                    break;
+                case 0:
+                    stayInReportsMenu = false;
+                    break;
+                default:
+                    System.out.println("\n Invalid choice, Please try again.");
+            }
+
+        }
+    }
+    private static void showTransactionVendor(String vendorName){
+        List<String> transactions = readTransactionsFromCSV();
+        for (String transaction : transactions){
+            if (transaction.contains(vendorName)){
+                System.out.println(transaction);
+            }
+        }
     }
     private static List<String> readTransactionsFromCSV(){
         List<String> transactions = new ArrayList<>();
