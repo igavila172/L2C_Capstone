@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class runLedger {
 
     public static void displayLedgerMenu() {
@@ -38,7 +40,7 @@ public class runLedger {
                     break;
                 case 4:
                     System.out.println("\n[Showing all REPORTS]");
-                    showReports(scanner);
+                    showReports();
                     break;
                 case 5:
                     System.out.println("\n[Returning to HOME]");
@@ -72,7 +74,8 @@ public class runLedger {
             }
         }
     }
-    private static void showReports(Scanner scanner){
+    private static void showReports(){
+        Scanner scanner = new Scanner(System.in);
         boolean stayInReportsMenu = true;
 
         while (stayInReportsMenu){
@@ -91,19 +94,20 @@ public class runLedger {
             switch (choice){
                 case 1:
                     System.out.println("\n[Month to Date]");
-                    //method
+                    showMonthToDate();
                     break;
+
                 case 2:
                     System.out.println("\n[Previous Month]");
-                    //method
+                    showPreviousMonth();
                     break;
                 case 3:
                     System.out.println("\n[Year to Date]");
-                    //method
+                    showYearToDate();
                     break;
                 case 4:
                     System.out.println("\n[Previous Year]");
-                    //method
+                    showPreviousYear();
                     break;
                 case 5:
                     System.out.println("\n[Search by Vendor]");
@@ -118,6 +122,49 @@ public class runLedger {
                     System.out.println("\n Invalid choice, Please try again.");
             }
 
+        }
+    }
+    private static void showMonthToDate(){
+        List<String> transactions = readTransactionsFromCSV();
+        LocalDate today = LocalDate.now();
+        String monthPrefix = today.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+        for (String transaction : transactions){
+            if (transaction.startsWith(monthPrefix)){
+                System.out.println(transaction);
+            }
+        }
+    }
+    private static void showYearToDate(){
+        List<String> transactions = readTransactionsFromCSV();
+        String currentYear = String.valueOf(LocalDate.now().getYear());
+
+        for (String transaction : transactions){
+            if (transaction.startsWith(currentYear)){
+                System.out.println(transaction);
+            }
+        }
+    }
+    private static void showPreviousMonth(){
+        List<String> transactions = readTransactionsFromCSV();
+        LocalDate today = LocalDate.now();
+        LocalDate previousMonth = today.minusMonths(1);
+        String previousMonthPrefix = previousMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+        for (String transaction : transactions){
+            if (transaction.startsWith(previousMonthPrefix)){
+                System.out.println(transaction);
+            }
+        }
+    }
+    private static void showPreviousYear(){
+        List<String> transactions = readTransactionsFromCSV();
+        String previousYear = String.valueOf(LocalDate.now().getYear()-1);
+
+        for (String transaction : transactions){
+            if (transaction.startsWith(previousYear)){
+                System.out.println(transaction);
+            }
         }
     }
     private static void showTransactionVendor(String vendorName){

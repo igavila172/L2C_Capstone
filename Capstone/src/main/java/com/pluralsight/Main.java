@@ -79,7 +79,7 @@ public class Main {
     private static void saveTransaction(String description, String vendor, double amount)
         throws IOException{
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         String date = now.format(dateFormatter);
