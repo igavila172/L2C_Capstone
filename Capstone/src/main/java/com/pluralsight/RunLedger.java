@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-public class runLedger {
+public class RunLedger {
 
     public static void displayLedgerMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -53,23 +53,23 @@ public class runLedger {
         }
     }
     private static void showAllEntries(){
-            List<String> transactions = readTransactionsFromCSV();
-            for (String transaction : transactions){
+            List<Transaction> transactions = readTransactionsFromCSV();
+            for (Transaction transaction : transactions){
                 System.out.println(transaction);
             }
     }
     private static void showPayments(){
-            List<String> transactions = readTransactionsFromCSV();
-            for (String transaction : transactions){
-                if (transaction.startsWith("-")){
+            List<Transaction> transactions = readTransactionsFromCSV();
+            for (Transaction transaction : transactions){
+                if (transaction.getAmount()<0){
                     System.out.println(transaction);
                 }
             }
     }
     private static void showDeposits(){
-        List<String> transactions = readTransactionsFromCSV();
-        for (String transaction : transactions){
-            if (!transaction.startsWith("-")){
+        List<Transaction> transactions = readTransactionsFromCSV();
+        for (Transaction transaction : transactions){
+            if (transaction.getAmount()>0){
                 System.out.println(transaction);
             }
         }
@@ -125,62 +125,77 @@ public class runLedger {
         }
     }
     private static void showMonthToDate(){
-        List<String> transactions = readTransactionsFromCSV();
+        List<Transaction> transactions = readTransactionsFromCSV();
         LocalDate today = LocalDate.now();
         String monthPrefix = today.format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
-        for (String transaction : transactions){
-            if (transaction.startsWith(monthPrefix)){
+        for (Transaction transaction : transactions){
+            if (transaction.getMonth().equals(monthPrefix)){
                 System.out.println(transaction);
             }
         }
     }
     private static void showYearToDate(){
-        List<String> transactions = readTransactionsFromCSV();
+        List<Transaction> transactions = readTransactionsFromCSV();
         String currentYear = String.valueOf(LocalDate.now().getYear());
 
-        for (String transaction : transactions){
-            if (transaction.startsWith(currentYear)){
+        for (Transaction transaction : transactions){
+            if (transaction.getYear().equals(currentYear)){
                 System.out.println(transaction);
             }
         }
     }
     private static void showPreviousMonth(){
-        List<String> transactions = readTransactionsFromCSV();
+        List<Transaction> transactions = readTransactionsFromCSV();
         LocalDate today = LocalDate.now();
         LocalDate previousMonth = today.minusMonths(1);
         String previousMonthPrefix = previousMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
 
-        for (String transaction : transactions){
-            if (transaction.startsWith(previousMonthPrefix)){
+        for (Transaction transaction : transactions){
+            if (transaction.getMonth().equals(previousMonthPrefix)){
                 System.out.println(transaction);
             }
         }
     }
     private static void showPreviousYear(){
-        List<String> transactions = readTransactionsFromCSV();
+        List<Transaction> transactions = readTransactionsFromCSV();
         String previousYear = String.valueOf(LocalDate.now().getYear()-1);
 
-        for (String transaction : transactions){
-            if (transaction.startsWith(previousYear)){
+        for (Transaction transaction : transactions){
+            if (transaction.getYear().equals(previousYear)){
                 System.out.println(transaction);
             }
         }
     }
     private static void showTransactionVendor(String vendorName){
-        List<String> transactions = readTransactionsFromCSV();
-        for (String transaction : transactions){
-            if (transaction.contains(vendorName)){
+        List<Transaction> transactions = readTransactionsFromCSV();
+        for (Transaction transaction : transactions){
+            if (transaction.getVendor().equalsIgnoreCase(vendorName)){
                 System.out.println(transaction);
             }
         }
     }
-    private static List<String> readTransactionsFromCSV(){
-        List<String> transactions = new ArrayList<>();
+    private static List<Transaction> readTransactionsFromCSV(){
+        List<Transaction> transactions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;
+            boolean firstLine = true;
             while ((line = reader.readLine()) != null) {
-                transactions.add(line);
+                if (firstLine){
+                    firstLine = false;
+                    continue;
+                }
+                String[] transactionParts = line.split("\\|");
+
+                if(transactionParts.length < 5)continue;
+
+                String date = transactionParts[0];
+                String time = transactionParts[1];
+                String description = transactionParts[2];
+                String vendor = transactionParts[3];
+                String amount = transactionParts[4];
+
+                transactions.add(new Transaction(date, time, description,vendor,Double.parseDouble(amount)));
             }
         } catch (IOException e){
                 System.out.println("Error reading file: " + e.getMessage());

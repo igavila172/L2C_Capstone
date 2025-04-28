@@ -24,7 +24,7 @@ public class Main {
             switch (choice) {
                 case 1 -> runDeposit(scanner);
                 case 2 -> runPayment(scanner);
-                case 3 -> runLedger.displayLedgerMenu();
+                case 3 -> RunLedger.displayLedgerMenu();
                 case 4 -> {
                     running = false;
                     System.out.println("Thank you for banking with LEDGER. Goodbye!");
