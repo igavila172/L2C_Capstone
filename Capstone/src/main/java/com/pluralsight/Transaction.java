@@ -20,6 +20,11 @@ public class Transaction {
     public String getTime(){
         return time;
     }
+
+    public String getDate() {
+        return date;
+    }
+
     public String getDescription(){
         return description;
     }

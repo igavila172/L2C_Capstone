@@ -85,8 +85,9 @@ public class RunLedger {
             System.out.println("[3] Year To Date");
             System.out.println("[4] Previous Year");
             System.out.println("[5] Search by Vendor");
+            System.out.println("[6] Custom Search");
             System.out.println("[0] Back");
-            System.out.print("Choose an option [0-5]: ");
+            System.out.print("Choose an option [0-6]: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -115,6 +116,11 @@ public class RunLedger {
                     String vendorName = scanner.nextLine();
                     showTransactionVendor(vendorName);
                     break;
+                case 6:
+                    System.out.println("\n[Custom Search]");
+                    List<Transaction> transactions = readTransactionsFromCSV();
+                    customSearch(transactions);
+                    break;
                 case 0:
                     stayInReportsMenu = false;
                     break;
@@ -124,6 +130,56 @@ public class RunLedger {
 
         }
     }
+    private static void customSearch(List<Transaction> transactions){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter start date (yyyy-MM-dd) or press Enter to skip: ");
+        String startDateInput = scanner.nextLine().trim();
+
+        System.out.print("Enter end date (yyyy-MM-dd) or press Enter to skip: ");
+        String endDateInput = scanner.nextLine().trim();
+
+        System.out.print("Enter description or press Enter to skip: ");
+        String descriptionInput = scanner.nextLine().trim();
+
+        System.out.print("Enter vendor name or press Enter to skip: ");
+        String vendorInput = scanner.nextLine().trim();
+
+        System.out.print("Enter amount or press Enter to skip: ");
+        String amountInput = scanner.nextLine().trim();
+
+        double amount = 0;
+        boolean filterByAmount = false;
+        if (!amountInput.isEmpty()) {
+            amount = Double.parseDouble(amountInput);
+            filterByAmount = true;
+        }
+        System.out.println("\nResults");
+        for (Transaction transaction : transactions){
+            boolean matches = true;
+
+            if(!startDateInput.isEmpty() && (transaction.getDate().compareTo(startDateInput) < 0)){
+                matches = false;
+            }
+
+            if(!endDateInput.isEmpty() && transaction.getDate().compareTo(endDateInput)>0){
+                matches = false;
+            }
+            if(!descriptionInput.isEmpty() && !transaction.getDescription().toLowerCase().contains(descriptionInput.toLowerCase())){
+                matches = false;
+            }
+            if(!vendorInput.isEmpty() && !transaction.getVendor().toLowerCase().contains(vendorInput.toLowerCase())){
+                matches = false;
+            }
+            if (filterByAmount && transaction.getAmount() != amount){
+                matches = false;
+            }
+            if(matches){
+                System.out.println(transaction);
+            }
+
+        }
+    }
+
     private static void showMonthToDate(){
         List<Transaction> transactions = readTransactionsFromCSV();
         LocalDate today = LocalDate.now();
