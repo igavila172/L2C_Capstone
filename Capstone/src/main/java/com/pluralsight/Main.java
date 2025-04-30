@@ -70,6 +70,7 @@ public class Main {
             saveTransaction(description, vendor, amount);
 
             System.out.println("Payment was successful!");
+
         } catch (IOException e) {
             System.out.println("error recording payment, try again.");
         } catch (NumberFormatException e){
