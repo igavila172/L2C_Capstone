@@ -157,7 +157,7 @@ public class RunLedger {
         for (Transaction transaction : transactions){
             boolean matches = true;
 
-            if(!startDateInput.isEmpty() && (transaction.getDate().compareTo(startDateInput) < 0)){
+            if(!startDateInput.isEmpty() && transaction.getDate().compareTo(startDateInput) < 0){
                 matches = false;
             }
 

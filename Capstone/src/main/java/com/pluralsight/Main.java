@@ -9,13 +9,18 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        System.out.println("***** WELCOME TO THE LEDGER APP *****");
+        System.out.println("\n***** WELCOME TO PIGGY BANKY *****");
+        System.out.println(" ^  ^\n(oo)   <- oink oink!\n(____)\n^^ ^^\n");
+
 
         while (running){
+            System.out.printf("CURRENT BALANCE | $%.2f\n",SavingsGoalTracker.getNetFundsFromTransactions());
+            System.out.println("----------------");
             System.out.println("[1] Add Deposit");
             System.out.println("[2] Make Payment (Debit)");
             System.out.println("[3] View Ledger");
-            System.out.println("[4] Exit");
+            System.out.println("[4] Savings Account");
+            System.out.println("[5] Exit");
             System.out.print("\nPlease select an option (1-4): ");
 
             int choice = scanner.nextInt();
@@ -25,9 +30,10 @@ public class Main {
                 case 1 -> runDeposit(scanner);
                 case 2 -> runPayment(scanner);
                 case 3 -> RunLedger.displayLedgerMenu();
-                case 4 -> {
+                case 4 -> SavingsGoalTracker.savingsMenu();
+                case 5 -> {
                     running = false;
-                    System.out.println("Thank you for banking with LEDGER. Goodbye!");
+                    System.out.println("Thank you for OINKING with PIGGY BANKY. Goodbye!");
                 }
                 default -> System.out.println("Invalid choice. Please enter 1–4.");
             }
