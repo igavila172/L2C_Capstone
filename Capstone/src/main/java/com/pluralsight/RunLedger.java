@@ -1,5 +1,6 @@
 package com.pluralsight;
 import java.io.BufferedReader;
+import java.util.Collections;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.IOException;
@@ -256,6 +257,7 @@ public class RunLedger {
         } catch (IOException e){
                 System.out.println("Error reading file: " + e.getMessage());
 
-        }return transactions;
+        }Collections.reverse(transactions);
+        return transactions;
     }
 }
