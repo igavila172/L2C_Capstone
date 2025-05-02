@@ -106,6 +106,8 @@ Each transaction is stored in `transactions.csv` using this pipe-delimited forma
 
 ```markdown
 ![Piggy Bank ASCII Art](images/PiggyScreenshot.png)
+<img src="images/PiggyScreenshot.png" alt="Screenshot" width="400" />
+
 ```
 
 ---
@@ -114,7 +116,7 @@ Each transaction is stored in `transactions.csv` using this pipe-delimited forma
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/piggy-banky.git
+   git clone https://github.com/igavila172/L2C_Capstone.git
    ```
 2. Open the project in your IDE
 3. Run `Main.java`
@@ -123,4 +125,4 @@ Each transaction is stored in `transactions.csv` using this pipe-delimited forma
 
 ## 🙌 Credits
 
-Created with ❤️ by [Your Name] as part of a Pluralsight Java project.
+Created with ❤️ by Isaac Avila as part of a Year Up United - Pluralsight Java project.
