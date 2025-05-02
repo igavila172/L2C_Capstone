@@ -127,29 +127,6 @@ public class SavingsGoalTracker {
         return currentChecking;
     }
 
-
-    /**public static double updateSavingsFromTransactions(double currentSavings) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(TRANSACTION_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length < 5) continue;
-
-                String description = parts[2].toLowerCase();
-                double amountTransaction = Double.parseDouble(parts[4]);
-
-                if (description.contains("savings")) {
-                    currentSavings += amountTransaction;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading transactions.");
-        }
-
-        return currentSavings;
-    }
-     **/
-
     public static void showProgress(double currentSavings, double goalAmount) {
         int totalBars = 30;
         double ratio = currentSavings / goalAmount;
