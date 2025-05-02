@@ -106,9 +106,10 @@ Each transaction is stored in `transactions.csv` using this pipe-delimited forma
 
 ```markdown
 ![Piggy Bank ASCII Art](images/PiggyScreenshot.png)
-<img src="images/PiggyScreenshot.png" alt="Screenshot" width="400" />
 
 ```
+
+![Piggy Bank ASCII Art](images/PiggyScreenshot.png)
 
 ---
 
