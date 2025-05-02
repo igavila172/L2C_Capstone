@@ -180,7 +180,6 @@ public class RunLedger {
 
         }
     }
-
     private static void showMonthToDate(){
         List<Transaction> transactions = readTransactionsFromCSV();
         LocalDate today = LocalDate.now();

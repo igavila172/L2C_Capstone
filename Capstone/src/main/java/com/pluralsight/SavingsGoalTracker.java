@@ -48,8 +48,8 @@ public class SavingsGoalTracker {
         String transactionLine = timestamp + "|Savings Transfer|Savings|-" + amount;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true))) {
-            writer.newLine();
             writer.write(transactionLine);
+            writer.newLine();
             System.out.println("Transaction added to CSV.");
         } catch (IOException e) {
             System.out.println("Failed to write to transactions file.");
@@ -60,7 +60,6 @@ public class SavingsGoalTracker {
         saveCurrentSavings(currentSavings);
         System.out.printf("$%.2f added to piggy bank!\n", amount);
     }
-
     public static double getGoalAmount() {
         File file = new File(GOAL_FILE);
 
@@ -85,7 +84,6 @@ public class SavingsGoalTracker {
 
         return goal;
     }
-
     public static double getCurrentSavings() {
         File file = new File(SAVINGS_FILE);
         if (file.exists()) {
@@ -98,7 +96,6 @@ public class SavingsGoalTracker {
         }
         return 0;
     }
-
     public static void saveCurrentSavings(double amount) {
         try (FileWriter writer = new FileWriter(SAVINGS_FILE)) {
             writer.write(String.valueOf(amount));
@@ -126,7 +123,6 @@ public class SavingsGoalTracker {
         }
         return currentChecking;
     }
-
     public static void showProgress(double currentSavings, double goalAmount) {
         int totalBars = 30;
         double ratio = currentSavings / goalAmount;
