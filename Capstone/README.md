@@ -9,7 +9,7 @@ Welcome to **Piggy Banky** a simple Java-based savings tracker and ledger app. L
 - [Overview](#overview)
 - [Features](#features)
 - [Usage](#usage)
-- [Code Example](#code-example)
+- [Interesting Code Example](#interesting-code-example)
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [File Format](#file-format)
@@ -39,7 +39,8 @@ Piggy Banky is a command-line app written in Java that helps users:
 
 ## 🚀 Usage
 
-Once the app starts, you'll be greeted with a menu:
+Once the app starts, you'll be greeted with a menu to then be able to nagivate to 
+different parts of the application:
 
 ```
 ***** WELCOME TO PIGGY BANKY *****
@@ -59,27 +60,36 @@ CURRENT BALANCE | $123.45
 
 ---
 
-## 📦 Code Example
+## 📦 Interesting Code Example
 
-### Main.java
+### Savings Goal Tracker.java
 
 ```java
-public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    boolean running = true;
+ public static void showProgress(double currentSavings, double goalAmount) {
+        int totalBars = 30;
+        double ratio = currentSavings / goalAmount;
+        int filledBars = (int)(ratio * totalBars);
 
-    while (running){
-        System.out.printf("CURRENT BALANCE | $%.2f\n", SavingsGoalTracker.getNetFundsFromTransactions());
-        // ... menu options ...
-        switch (choice) {
-            case 1 -> runDeposit(scanner);
-            case 2 -> runPayment(scanner);
-            case 3 -> RunLedger.displayLedgerMenu();
-            case 5 -> running = false;
+        StringBuilder progressBar = new StringBuilder("[");
+        for (int i = 0; i < totalBars; i++) {
+            progressBar.append(i < filledBars ? "#" : "-");
+        }
+        progressBar.append("]");
+
+        System.out.printf("Savings Goal: $%.2f / $%.2f\n", currentSavings, goalAmount);
+        System.out.println(progressBar + " " + (int)(ratio * 100) + "%");
+
+        if (currentSavings >= goalAmount) {
+            System.out.println("Goal Reached! Your piggy bank is proud! 🐷");
         }
     }
-}
 ```
+```markdown
+![SavingsStatus](images/SavingsStatus.png)
+
+```
+![SavingsStatus](images/SavingsStatus.png)
+
 
 ### Save Transaction Format
 
@@ -110,6 +120,28 @@ Each transaction is stored in `transactions.csv` using this pipe-delimited forma
 ```
 
 ![Piggy Bank ASCII Art](images/PiggyScreenshot.png)
+
+```markdown
+![Main Menu](images/MainMenu.png)
+
+```
+
+![Main Menu](images/MainMenu.png)
+
+```markdown
+![Transactions](images/Transactions.png)
+
+```
+
+![Transactions](images/Transactions.png)
+
+```markdown
+![SavingsBar](images/SavingsBar.png)
+
+```
+
+![SavingsBar](images/SavingsBar.png)
+
 
 ---
 
